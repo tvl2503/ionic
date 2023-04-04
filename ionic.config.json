@@ -1,0 +1,7 @@
+{
+  "name": "webionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
