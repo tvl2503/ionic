@@ -1,0 +1,50 @@
+@import "../../components/GlobalStyles/mixin";
+.content{
+    display: flex;
+    &--list--product{
+        text-align: center;
+    }
+    @include mobile{
+        display: block;
+    }
+    &--list--product{
+        text-align: center;
+        .pagination{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+    }
+}
+.product-page{
+    .list-product{
+        display: flex;
+        margin-top: 20px;
+        flex-wrap: wrap;
+        width: 100%;
+        .product--card{
+            height: auto;
+            margin-bottom: 20px;
+        }
+        ion-button {
+            --background : #fff;
+        }
+    }
+    .load-more{
+        --background : #fff;
+        color: #e41b35;
+        border: 1px solid #ccc;
+        --box-shadow : 0;
+        --color-hover : #fff;
+        --color-hover : #e41b35;
+        button{
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: none;
+            &:hover{
+                color: #fff;
+                background-color: #e41b35;
+            }
+        }
+    }
+}

@@ -21,22 +21,43 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import GlobalStyles from "./components/GlobalStyles";
 
+import Layout from './components/Layout';
+import { useCallback, useEffect, useState } from 'react';
+import agent from './service/agent'
+import { useDispatch } from 'react-redux';
+import {setCategory} from './service/category';
+import { ToastContainer } from 'react-toastify';
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const App = () => {
+  // const [category, setCategory] = useState({});
+  const dispatch =  useDispatch()
+  const getCate = useCallback(async () => {
+    try{
+      const cate = await agent.Category.getAllCategory();
+      dispatch(setCategory(cate))
+      // setCategory(cate)
+    }
+    catch(err){
+      setCategory({})
+    }
+  }, [])
+  useEffect(() => {
+    getCate()
+  }, [])
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <GlobalStyles>
+          <>
+            <ToastContainer autoClose={2000} />
+            <Layout  />
+          </>
+        </GlobalStyles>
+      </IonReactRouter>
+    </IonApp>
+)};
 
 export default App;

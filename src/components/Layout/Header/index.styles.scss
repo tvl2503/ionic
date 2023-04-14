@@ -1,0 +1,208 @@
+ion-header{
+    background-color : white;
+}
+.shrink{
+    position: fixed;
+    z-index: 10;
+    animation: slideInDown .65s cubic-bezier(.23,1,.32,1) ;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+.header{
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    font-family: "Quicksand", sans-serif;
+    &__top{
+        max-width: 1100px;
+        padding: 2px 15px;
+        font-size: .75rem;
+        margin: auto;
+        height: 50px;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 600;
+        &__info{
+            padding-right: 60px;
+            justify-content: space-between;
+            &__email, &__hotline{
+                padding-right: 10px;
+                align-items: center;
+                span{
+                    color: #DE0000;
+                }
+            }
+        }
+        &__search{
+            border: 2px solid #ddd;
+            border-radius: 20px;
+            position: relative;
+            --padding-start : 0;
+            .button-search{
+                --box-shadow: none;
+                --background: transparent !important;
+                --background-hover : #fff;
+                --padding-start : 0;
+                --padding-end : 0;
+                margin-left : 10px;
+                margin-right : 5px;
+                button{
+                    padding: 0;
+                    background: transparent !important ;
+                }
+                &:hover{
+                    button{
+                        background-color: transparent !important;
+                    }
+                }
+            }
+            // ion-input{
+            //     border: none;
+            //     --background: #fff;
+            //     outline: none;
+            //     font-size: 12px;
+            //     --padding-top : 12px !important;
+            //     --padding-start : 2px !important;
+            //     --padding-end : 2px !important;
+            //     --padding-bottom : 12px !important; 
+            //     margin-right: 20px;
+            //     --highlight-color-focused : #fff;
+            //     &:focus{
+            //         --background: #fff;
+            //     }
+            //     input{
+            //         padding: 2px 4px;
+            //         color: #000;
+            //         &:focus{
+            //             color: #000;
+            //             background-color: #fff !important;
+            //         }
+            //     }
+            // }
+            input{
+                outline: none;
+                background-color: #fff;
+                border: none;
+                margin-right: 15px;
+                margin-left: 10px;
+                &:-webkit-autofill{
+                    background-color: #fff;
+                }
+            }
+            .sc-ion-input-md-h{
+                --padding-top: 0;
+                --padding-bottom: 0;
+            }
+            &__product{
+                position: absolute;
+                top: 40px;
+                background-color: #f6f6f6;
+                min-width: 300px;
+                overflow-y: auto;
+                max-height: 300px;
+                padding: 5px;
+                z-index: 999;
+                .product{
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    .img{
+                        width: 25%;
+                    }
+                    .content{
+                        margin-left: 5px;
+                        display: flex;
+                        flex-direction: column;
+                        text-align: center;
+                        color: #000;
+                    }
+                }
+            }
+        }
+        &__user{
+            
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            &__item{
+                padding-right: 10px;
+
+            }
+            .logout{
+                cursor: pointer;
+                margin-left: 20px;
+                padding: 5px 10px;
+                background-color: #DE0000;
+                color: #f1f1f1;
+                border-radius: 20px;
+                border: 1px solid #DE0000;
+                &:hover{
+                    background-color: #fff;
+                    color: #000;
+                }
+            }
+        }
+        border-bottom: 1px solid #f1f1f1;
+    }
+    &__bottom{
+        max-width: 1100px;
+        margin: auto;
+        &__menu{
+            display: flex;
+            font-size: 1.125rem;
+            text-transform: uppercase;
+            font-weight: 700;
+
+            &__item{
+                display: block;
+                padding: 40px 10px; 
+                a{
+                    padding: 10px;
+                    border-radius: 10px;
+                    &:hover{
+                        background-color: var(--main-second-bg);
+                        color: var(--txt-second-color);
+                    }
+                }
+            }
+
+            &__search{
+                display: none;
+            }
+
+        }
+        &__cart{
+            color: var(--main-second-bg);
+            font-size: 1.2rem;
+            font-weight: 700;
+            position: relative;
+            padding: 10px;
+            .cart--quantity{
+                position: absolute;
+                top: 0;
+                right: 0;
+                font-size: 13px;
+                line-height: 20px;
+                background: #DE0000;
+                color: #fff;
+                width: 20px;
+                height: 20px;
+                text-align: center;
+                border-radius: 50%;
+            }
+        }
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+@keyframes slideInDown{
+    0%{
+        transform: translate3d(0,-100%,0);
+        visibility: visible;
+    }
+    to{
+        transform: translateZ(0);
+    }
+}
