@@ -18,9 +18,12 @@ export const register = createAsyncThunk(
         try {
             const {data} = await axiosClient.post( "auth/register" ,{user:{fullName, email, password, phone}})
             const {user: {token,...user}} = data
+            alert("Đăng ký thành công")
             return {token, user}
         }
         catch(error) {
+            console.log(error.response.data.message);
+            alert(error.response.data.message)
             return thunkApi.rejectWithValue(error.response.data);
         }
 
@@ -35,11 +38,13 @@ export const login = createAsyncThunk(
             
             console.log(data);
             const {user: {token,...user}} = data
+            alert("Đăng nhập thành công")
             return {token, user};
 
         }
         catch(error){
             console.log(error.response.data);
+            alert(error.response.data?.message)
             return thunkApi.rejectWithValue(error.response.data);
         } 
     }

@@ -34,7 +34,6 @@ const Login = () => {
     }
     const hanldeBlur = (e) => {
         const name = e.target.name
-        console.log(name);
         const error = validate(formValues)
         if(name  === "email"){
             setFormErrors({...formErrors, [name] : error.email})

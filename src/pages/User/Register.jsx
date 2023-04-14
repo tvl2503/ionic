@@ -2,9 +2,13 @@ import { IonButton, IonCol, IonInput, IonItem, IonLabel, IonRow, IonText } from 
 import Helmet from './../../components/Helmet/index';
 import './User.scss';
 import { Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as yup from 'yup';
 import Input from "../../components/Input";
+import { isValidEmail, isValidPassword } from "../../utils/validate";
+import { useDispatch, useSelector } from "react-redux";
+import { register, selectErrors, selectIsLoading, selectUser } from "../../service/auth/authSlice";
+import { useEffect, useState } from "react";
 
 const validateSchema = yup.object().shape({
     email : yup.string().email("Vui lòng nhập đúng email").required("Vui lòng nhập email"),
@@ -13,7 +17,69 @@ const validateSchema = yup.object().shape({
     phone: yup.string().required("Vui lòng nhập số điện thoại")
 })
 const Register = () => {
-    console.log("login");
+    const user = useSelector(selectUser)
+    const history = useHistory();
+    const initialValues = {fullName: "", email: "", password: "", phone: ""}
+    const dispatch = useDispatch()
+    const inProgress = useSelector(selectIsLoading);
+    const [formValues, setFormValues] = useState(initialValues)
+    const [formErrors, setFormErrors] = useState({fullName: "", email: "", password: "", phone: ""})
+
+    const handleChange = ({ currentTarget: input }) => {
+        setFormValues({...formValues,[input.name]: input.value })
+    }
+    const hanldeBlur = (e) => {
+        const name = e.target.name
+        const error = validate(formValues)
+        if(name  === "email"){
+            setFormErrors({...formErrors, [name] : error.email})
+        }
+        else if(name === "fullName"){
+            setFormErrors({...formErrors, [name] : error.fullName})
+
+        }
+        else if(name === "password"){
+            setFormErrors({...formErrors, [name] : error.password})
+
+        }
+        else if(name === "phone"){
+            setFormErrors({...formErrors, [name] : error.phone})
+
+        }
+    }
+    const handleSubmit =  async (e) => {
+        e.preventDefault()
+        
+        dispatch(register(formValues))
+    }
+    useEffect(() => {
+        if(user){
+            history.push("/")
+        }
+    }, [user])
+    const validate = (values) => {
+        const errors = {fullName: "", email: "", password: "", phone: ""};
+        if(!values.fullName){
+            errors.fullName = "Vui lòng nhập họ và tên";
+        }
+        if(!values.email){
+            errors.email = "Vui lòng nhập email";
+        }
+        else if(!isValidEmail(values.email)){
+            errors.email = "Vui lòng nhập đúng email!"
+        }
+        if(!values.password){
+            errors.password = "Vui lòng nhập password";
+        }
+        else if(!isValidPassword(values.password)){
+            errors.password = "Mật khẩu ít nhất 6 ký tự!"
+
+        }
+        if(!values.phone){
+            errors.phone = "Vui lòng nhập số điện thoại";
+        }
+        return errors
+    }
     return(
             <Helmet title = "Đăng ký" >
             <IonRow className="login">
@@ -22,43 +88,39 @@ const Register = () => {
                 </IonCol>
                 <IonCol className="login__content">
                     <div className="login__content__form">
-                    <Formik
-                        initialValues={{fullName: "", phone: "", email : "", password: ""}}
-                        validationSchema={validateSchema}
-                    >
-                        {({handleSubmit, values, handleChange, handleBlur, errors, isSubmitting}) => (
-                            <>
-                                    <Input type="text" placeholder='Họ và Tên'
-                                        name = "fullName" value={values.fullName} onChange={handleChange}
-                                        error = {errors.fullName}
-                                        onBlur={handleBlur}
-                                        />
-                                    <Input type="text" placeholder='Email'
-                                        name = "email" value={values.email} onChange={handleChange}
-                                        error = {errors.email}
-                                        onBlur={handleBlur}
-                                        style = {{marginTop : 30}}
-                                        />
-
-                                    <Input type="password" placeholder='Mật khẩu' 
-                                        name = "password"  value={values.password}  onChange={handleChange}
-                                        error = {errors.password}
-                                        onBlur={handleBlur}
-                                        style = {{marginTop : 30}}
-                                        />  
-                                    <Input type="text" placeholder='Điện thoại'
-                                        name = "phone" value={values.phone} onChange={handleChange}
-                                        error = {errors.phone}
-                                        onBlur={handleBlur}
-                                        style = {{marginTop : 30}}
-                                        />                              
-                                    <IonButton disabled = {isSubmitting} color={'transparent'} style={{marginTop: 30}}>
-                                    {/* {inProgress? <div className="loader"></div> : 'Đăng nhập'} */}
-                                    Đăng ký
-                                </IonButton>
-                            </>
-                        )}
-                    </Formik>
+                        <Input type="text" placeholder='Họ và tên'
+                            name = "fullName" value={formValues.fullName} 
+                            error = {formErrors.fullName}
+                            onChange = {handleChange}
+                            onBlur = {hanldeBlur}
+                            />
+                        <Input type="text" placeholder='Số điện thoại' 
+                            name = "phone"  value={formValues.phone}  
+                            onChange={handleChange}
+                            style = {{marginTop : 30}}
+                            error = {formErrors.phone}
+                            onBlur = {hanldeBlur}
+                            />
+                        <Input type="text" placeholder='Email'
+                            name = "email" value={formValues.email} 
+                            error = {formErrors.email}
+                            style = {{marginTop : 30}}
+                            onChange = {handleChange}
+                            onBlur = {hanldeBlur}
+                            autocomplete="off"
+                            />  
+                         <Input type="password" placeholder='Mật khẩu' 
+                            name = "password"  value={formValues.password}  
+                            onChange={handleChange}
+                            style = {{marginTop : 30}}
+                            error = {formErrors.password}
+                            onBlur = {hanldeBlur}
+                            autocomplete="off"
+                            />
+                        <IonButton onClick={handleSubmit} disabled = {!isValidEmail(formValues.email) || !isValidPassword(formValues.password)}  color={'primary'} style={{marginTop: 30}}>
+                            {/* {inProgress? <div className="loader"></div> : 'Đăng nhập'} */}
+                            Đăng nhập
+                        </IonButton>
                        <IonItem lines="none" text-center color={'transparent'} className="forgot--password">
                            <IonLabel>
                                 <Link to = "/user/login">Đăng nhập</Link>
