@@ -4,15 +4,18 @@ import { IonButton } from '@ionic/react';
 import Slider from '../../components/Slider';
 import ProductCategory from '../../components/ProductCategory';
 import { useSelector } from 'react-redux';
+import Helmet from '../../components/Helmet';
 const Home= () => {
   const category = useSelector(state => state.category)
   return (
+    <Helmet title = "Trang chủ">
       <IonGrid className='home'>
         <Slider />
         {category.map((item, index) => (
           <ProductCategory key = {index} category = {item}  />
         ))}
       </IonGrid>
+    </Helmet>
   );
 };
 

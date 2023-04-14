@@ -8,6 +8,7 @@ import numberWithVND from "../../utils/numberwithvnd";
 import "./Cart.scss";
 import { IonCol, IonGrid, IonIcon, IonRow } from "@ionic/react";
 import { removeOutline, trashOutline } from "ionicons/icons";
+import Helmet from "../../components/Helmet";
 
 const crumbs = [
   {
@@ -32,6 +33,9 @@ const Cart = () => {
     
   }
   return (
+    <Helmet title = "Giỏ hàng">
+
+  
     <div className="cart container-class">
       <Breadcrumb crumbs={crumbs} />
       <IonGrid className="cart__main">
@@ -90,6 +94,7 @@ const Cart = () => {
             <p>Giỏ hàng hiện tại của bạn chưa có sản phẩm nào</p>
         </div> */}
     </div>
+    </Helmet>
   );
 };
 
