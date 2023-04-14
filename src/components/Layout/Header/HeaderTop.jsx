@@ -3,7 +3,7 @@ import { searchOutline } from 'ionicons/icons';
 import { useSelector, useDispatch } from "react-redux";
 import { logout, selectUser } from "../../../service/auth/authSlice";
 import { useHistory } from "react-router";
-import { remove } from "../../../service/cart/cartSlice";
+import { getToCart, remove } from "../../../service/cart/cartSlice";
 import { Link } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import agent from "../../../service/agent";
@@ -28,6 +28,9 @@ const HeaderTop = () => {
     const handleSumbit = () => {
         history.push('/search?key='+keyword)
     }
+    const getCart = useCallback(() => {
+        dispatch(getToCart())
+    }, [user])
     const handleSearch = useCallback(
         async () => {
           let product = []
@@ -46,6 +49,9 @@ const HeaderTop = () => {
           }
         }, [keyword]
       );
+    useEffect(() => {
+        getCart()
+    },[getCart])
     useEffect(() => {
         handleSearch()
     }, [handleSearch])
