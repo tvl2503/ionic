@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb";
 import { useSelector, useDispatch } from "react-redux";
 import {updateToCartById} from '../../service/cart/cartSlice'
@@ -27,9 +27,10 @@ const thead = [
 const Cart = () => {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart);
+  const history = useHistory();
   const handleUpdate = (productId, type,size) => {
     dispatch(updateToCartById({productId, type, size}))
-    toast.success("Thành công")
+    
     
   }
   return (
@@ -86,7 +87,7 @@ const Cart = () => {
           Tổng tiền: <span>{numberWithVND(cart.total)}</span>
         </div>
         <div className="cart__button">
-          <button>Tiến hành thanh toán</button>
+          <button onClick={() => history.push("/checkout")}>Tiến hành thanh toán</button>
           <Link to="/">Tiếp tục mua hàng</Link>
         </div>
       </div>

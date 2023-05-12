@@ -29,6 +29,7 @@ import agent from './service/agent'
 import { useDispatch } from 'react-redux';
 import {setCategory} from './service/category';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 setupIonicReact();
 
 const App = () => {

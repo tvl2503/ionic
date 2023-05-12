@@ -4,12 +4,13 @@ import {
     createSlice,
   } from '@reduxjs/toolkit';
 import agent from '../agent';
+import { toast } from 'react-toastify';
 export const addTocart = createAsyncThunk(
   'cart/addTocart',
-  async ({productId, quantity, size, price, name, img}, thunkApi) => {
+  async ({productId, quantity, size, price, name, img, percentReduce}, thunkApi) => {
     try{
-        const data = await agent.Cart.addToCart(productId, quantity, size, price, name, img);
-        
+        const data = await agent.Cart.addToCart(productId, quantity, size, price, name, img, percentReduce);
+        toast.success("Thêm thành công")
         return data
     }catch(error){
       console.log(error);
@@ -35,6 +36,7 @@ export const updateToCartById = createAsyncThunk(
   async ({productId, type, size},thunkApi) => {
     try{
       const data = await agent.Cart.updateCartByUser(productId, type, size);
+      toast.success("Thành công")
       return data;
     }catch(err){
       return thunkApi.rejectWithValue(err.data.message);

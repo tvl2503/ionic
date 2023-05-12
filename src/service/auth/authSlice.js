@@ -11,6 +11,7 @@ import {
     loadingReducer,
     Status,  
 } from '../../utils/utils';
+import { toast } from 'react-toastify';
 
 export const register = createAsyncThunk(
     'auth/register',
@@ -18,12 +19,12 @@ export const register = createAsyncThunk(
         try {
             const {data} = await axiosClient.post( "auth/register" ,{user:{fullName, email, password, phone}})
             const {user: {token,...user}} = data
-            alert("Đăng ký thành công")
+            toast.success("Đăng ký thành công")
             return {token, user}
         }
         catch(error) {
             console.log(error.response.data.message);
-            alert(error.response.data.message)
+            toast.error(error.response.data.message)
             return thunkApi.rejectWithValue(error.response.data);
         }
 
@@ -38,13 +39,13 @@ export const login = createAsyncThunk(
             
             console.log(data);
             const {user: {token,...user}} = data
-            alert("Đăng nhập thành công")
+            toast.success("Đăng nhập thành công")
             return {token, user};
 
         }
         catch(error){
             console.log(error.response.data);
-            alert(error.response.data?.message)
+            toast.error(error.response.data?.message)
             return thunkApi.rejectWithValue(error.response.data);
         } 
     }

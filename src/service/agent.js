@@ -1,6 +1,12 @@
 import { BASE_URL } from "../constants/api";
 import axios from 'axios'
-
+import axiosClient from "./axiosClient";
+const axiosMethods = {
+    GET: axiosClient.get,
+    POST: axiosClient.post,
+    PUT: axiosClient.put,
+    DELETE: axiosClient.delete,
+  };
 function serialize(object) {
     const params = [];
   
@@ -14,20 +20,8 @@ function serialize(object) {
   }
   
 const agent = async (url, body, method = "GET") => {
-    let header = ""
-    let token = localStorage.getItem("token")
-    if (token) {
-        header =  `Bearer ${token}`;
-    }
- 
     try{
-        const {data} = await axios({
-            method: method,
-            url: `${BASE_URL}${url}`,
-            headers : {token: header} ,
-            data: body? body: undefined
-        });
-      
+        const {data} = await axiosMethods[method](url, body);
        return data
     }catch(error){
    
@@ -71,14 +65,20 @@ const Category = {
     getAllCategory: (id) => requests.get("category")
 }
 const Cart = {
-    addToCart: (productId, quantity, size, price, name, img) => 
-        requests.post('cart/user', {products: {productId, quantity, size, price, name,img}}),
+    addToCart: (productId, quantity, size, price, name, img, percentReduce) => 
+        requests.post('cart/user', {products: {productId, quantity, size, price, name,img, percentReduce}}),
     getToCart: () => requests.get('cart/user/'),
     updateCartByUser: (productId, type, size) => requests.put('cart/user/' + productId, {type, size})
+}
+const Order = {
+    getOrderById : (id) => requests.get('order/' + id),
+    getOrders : (body) => requests.post('order/search', body)
 }
 export default {
     Auth,
     Product,
     Category,
-    Cart
+    Cart,
+    Order
+
 };

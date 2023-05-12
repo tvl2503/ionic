@@ -26,14 +26,13 @@ const ProductContent = ({product}) => {
   };
   const handleClick = () => {
     if(!size && product.size.length > 0){
-      alert("Vui lòng chọn kích thước")
+      toast.warning("Vui lòng chọn kích thước")
     }
     else if(user){
-      dispatch(addTocart({productId: product._id, quantity, size, price: product.price, name: product.name, img: product.image[0] }))
-      alert("Thêm vào giỏ hàng thành công!")
+      dispatch(addTocart({productId: product._id, quantity, size, price: product.price, name: product.name, img: product.image[0], percentReduce : product.percentReduce  }))
     }
     else{
-      alert("Vui lòng đăng nhập!")
+      toast.warning("Vui lòng đăng nhập!")
     }
   }
   return (

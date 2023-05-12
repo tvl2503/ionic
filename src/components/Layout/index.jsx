@@ -11,7 +11,8 @@ import ProductDetail from '../../pages/ProductDetail';
 import { useSelector } from 'react-redux';
 import Cart from './../../pages/Cart';
 import Search from '../../pages/Search';
-import Admin from '../../pages/Admin';
+import Checkout from './../../pages/Checkout/index';
+import CheckoutSuccess from './../../pages/CheckoutSuccess/index';
 
 const Layout = () => {
     const categorys = useSelector(state => state.category)
@@ -35,11 +36,10 @@ const Layout = () => {
                     <Route path = "/user/login" component={Login} />
                     <Route path = "/user/register" component={Register} />
 
-                    {
-                        user?.isAdmin && 
-                        <Route path={"/admin"} component = {Admin} />
-                    }
-                      <Footer />
+                    <Route path='/checkout' component = {Checkout} />
+                    <Route path='/checkout-success/:id' component = {CheckoutSuccess} />
+                    
+                    <Footer />
                 </IonContent>
             </IonPage>
         </IonRouterOutlet>
