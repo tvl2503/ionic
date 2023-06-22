@@ -23,7 +23,32 @@ import {
 } from "../../service/auth/authSlice";
 import { useEffect, useState } from "react";
 // Sử dụng component  IonButton, IonCol, IonInput, IonItem, IonLabel, IonRow, IonText của ionic
-
+/*
+ví dụ: sử dụng IonRow, IonCol:
+  <IonRow>
+    <IonCol>Column 1</IonCol>
+    <IonCol size = "8">Column 2</IonCol>
+    <IonCol>Column 3</IonCol>
+  </IonRow>
+  Thì trong html css sẽ là
+  html:
+      <div class="row">
+        <div class="col">Column 1</div>
+        <div class="col col-8">Column 2</div>
+        <div class="col">Column 3</div>
+      </div>
+  css:
+  .row{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .col{
+    flex: 1;
+  }
+  .col-8{
+    flex-basis: 8/12%;
+  }
+*/
 const validateSchema = yup.object().shape({
   email: yup
     .string()
