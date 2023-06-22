@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FreeMode, Navigation, Thumbs } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -6,33 +6,32 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-import '@ionic/react/css/ionic-swiper.css';
+import "@ionic/react/css/ionic-swiper.css";
 
-const ProductSlider = ({product}) => {
-    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+// Sử dụng ionic-swiper
+const ProductSlider = ({ product }) => {
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   return (
     <div className="product--detail__image">
-        <Swiper 
+      <Swiper
         style={{
-            "--swiper-navigation-color": "#fff",
-            "--swiper-pagination-color": "#fff",
-          }}
+          "--swiper-navigation-color": "#fff",
+          "--swiper-pagination-color": "#fff",
+        }}
         loop={true}
         navigation={true}
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper2"
-        >
-
-           {product.image.map((item, index) => (
-            <SwiperSlide key={index}>
-                <img src={item} alt = "" />
-            </SwiperSlide>
-        ))} 
-
-        </Swiper>
-        <Swiper
+      >
+        {product.image.map((item, index) => (
+          <SwiperSlide key={index}>
+            <img src={item} alt="" />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
         spaceBetween={10}
@@ -42,12 +41,11 @@ const ProductSlider = ({product}) => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper"
       >
-        
         {product.image.map((item, index) => (
-            <SwiperSlide key={index}>
-                <img src={item} alt = "" />
-            </SwiperSlide>
-        ))} 
+          <SwiperSlide key={index}>
+            <img src={item} alt="" />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
